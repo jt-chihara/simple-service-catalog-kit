@@ -33,6 +33,8 @@ export interface UseServicesResult {
   filteredServices: Service[]
   /** ハイライトされたサービス名 */
   highlightedServiceNames: Set<string>
+  /** 検索結果カウント */
+  searchResultCount: { matched: number; related: number }
 }
 
 /**
@@ -68,11 +70,12 @@ export function useServices(): UseServicesResult {
   }, [reload])
 
   // 検索によるフィルタリングとハイライト
-  const { filteredServices, highlightedServiceNames } = (() => {
+  const { filteredServices, highlightedServiceNames, searchResultCount } = (() => {
     if (!searchQuery.trim()) {
       return {
         filteredServices: services,
         highlightedServiceNames: new Set<string>(),
+        searchResultCount: { matched: 0, related: 0 },
       }
     }
 
@@ -86,8 +89,10 @@ export function useServices(): UseServicesResult {
 
     // マッチしたサービスとその依存先・被依存元をハイライト
     const highlighted = new Set<string>()
+    const matchedNames = new Set<string>()
     for (const s of matched) {
       highlighted.add(s.name)
+      matchedNames.add(s.name)
       for (const dep of s.dependencies) {
         highlighted.add(dep)
       }
@@ -103,6 +108,10 @@ export function useServices(): UseServicesResult {
     return {
       filteredServices: services,
       highlightedServiceNames: highlighted,
+      searchResultCount: {
+        matched: matchedNames.size,
+        related: highlighted.size - matchedNames.size,
+      },
     }
   })()
 
@@ -118,5 +127,6 @@ export function useServices(): UseServicesResult {
     setSearchQuery,
     filteredServices,
     highlightedServiceNames,
+    searchResultCount,
   }
 }
