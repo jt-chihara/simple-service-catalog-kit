@@ -3,7 +3,6 @@ import {
   BackgroundVariant,
   Controls,
   type Edge,
-  MiniMap,
   type Node,
   ReactFlow,
 } from '@xyflow/react'
@@ -71,13 +70,13 @@ export function ServiceGraph({ services, onNodeClick, selectedServiceName }: Ser
         }}
         fitView
         fitViewOptions={{ padding: 0.2 }}
+        proOptions={{ hideAttribution: true }}
         defaultEdgeOptions={{
           type: 'dependency',
           markerEnd: { type: 'arrowclosed' as const },
         }}
       >
         <Controls />
-        <MiniMap />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
       </ReactFlow>
     </div>

@@ -19,7 +19,6 @@ vi.mock('@xyflow/react', async () => {
         {children}
       </div>
     ),
-    MiniMap: () => <div data-testid="minimap" />,
     Controls: () => <div data-testid="controls" />,
     Background: () => <div data-testid="background" />,
   }
@@ -69,12 +68,6 @@ describe('ServiceGraph Integration', () => {
     // order-service -> user-service (1)
     // 合計: 3
     expect(screen.getByTestId('edge-count').textContent).toBe('3')
-  })
-
-  it('MiniMapが表示される', () => {
-    render(<ServiceGraph services={mockServices} />)
-
-    expect(screen.getByTestId('minimap')).toBeInTheDocument()
   })
 
   it('コントロールが表示される', () => {

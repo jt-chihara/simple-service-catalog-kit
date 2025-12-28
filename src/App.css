@@ -20,6 +20,12 @@
   color: #f8fafc;
 }
 
+.app-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
 .app-main {
   flex: 1;
   position: relative;
@@ -169,17 +175,162 @@
   border-radius: 4px;
 }
 
-.react-flow__controls {
-  border-radius: 4px;
+.react-flow .react-flow__controls {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #cbd5e1;
+}
+
+.react-flow .react-flow__controls .react-flow__controls-button {
+  background: #f8fafc !important;
+  border: none !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  width: 32px;
+  height: 32px;
+}
+
+.react-flow .react-flow__controls .react-flow__controls-button svg {
+  fill: #1e293b !important;
+}
+
+.react-flow .react-flow__controls .react-flow__controls-button:hover {
+  background: #e2e8f0 !important;
+}
+
+.react-flow .react-flow__controls .react-flow__controls-button:hover svg {
+  fill: #0f172a !important;
+}
+
+.react-flow .react-flow__controls .react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+/* Service Detail Panel */
+.service-detail {
+  width: 320px;
+  background: #1e293b;
+  border-left: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
-.react-flow__controls-button {
-  background: #1e293b;
+.service-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid #334155;
-  fill: #94a3b8;
 }
 
-.react-flow__controls-button:hover {
+.service-detail-header h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.service-detail-header button {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.service-detail-header button:hover {
+  color: #f8fafc;
+}
+
+.service-detail-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.5rem;
+}
+
+.service-detail-section {
+  margin-bottom: 1.5rem;
+}
+
+.service-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.service-detail-section h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin: 0 0 0.75rem 0;
+}
+
+.service-description {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.service-meta {
+  margin: 0 0 1rem 0;
+}
+
+.service-meta dt {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.service-meta dd {
+  font-size: 0.875rem;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.service-detail .github-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.service-detail .github-link:hover {
+  text-decoration: underline;
+}
+
+.service-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.service-list li {
+  margin-bottom: 0.5rem;
+}
+
+.service-list button {
   background: #334155;
+  border: none;
+  color: #e2e8f0;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.service-list button:hover {
+  background: #475569;
+}
+
+.empty-list {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
 }
