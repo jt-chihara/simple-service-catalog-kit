@@ -12,28 +12,31 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "generate:jaeger": "tsx scripts/generate-from-jaeger.ts"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "@xyflow/react": "^12.0.0",
+    "dagre": "^0.8.5",
     "js-yaml": "^4.1.0",
-    "dagre": "^0.8.5"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
+    "@playwright/test": "^1.49.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.0.0",
     "@types/dagre": "^0.7.52",
     "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.0.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^25.0.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.7.2",
     "vite": "^7.0.0",
-    "vitest": "^3.0.0",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/jest-dom": "^6.6.0",
-    "jsdom": "^25.0.0",
-    "@playwright/test": "^1.49.0"
+    "vitest": "^3.0.0"
   }
 }

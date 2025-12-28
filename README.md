@@ -90,6 +90,50 @@ dependencies:
 3. 検索バーでサービス名・説明・オーナーでフィルタリングできます
 4. 循環依存や未定義参照がある場合は警告が表示されます
 
+## Jaegerからの自動生成
+
+Jaegerのトレース情報からサービス定義YAMLを自動生成できます。
+
+### 基本的な使い方
+
+```bash
+# Jaeger (localhost:16686) からサービス定義を生成
+pnpm generate:jaeger
+
+# カスタムJaeger URLを指定
+pnpm generate:jaeger -- --jaeger-url http://jaeger.example.com:16686
+
+# 確認モード（ファイルを作成せずに内容を確認）
+pnpm generate:jaeger -- --dry-run
+```
+
+### オプション
+
+| オプション | 説明 | デフォルト |
+|-----------|------|-----------|
+| `--jaeger-url <url>` | JaegerのURL | `http://localhost:16686` |
+| `--output <dir>` | 出力先ディレクトリ | `./services` |
+| `--owner <name>` | デフォルトのオーナー名 | `unknown-team` |
+| `--dry-run` | ファイルを作成せずに確認 | - |
+
+### OpenTelemetry Demoでの使用例
+
+[OpenTelemetry Demo](https://github.com/open-telemetry/opentelemetry-demo)を使った例：
+
+```bash
+# OpenTelemetry Demoを起動
+git clone https://github.com/open-telemetry/opentelemetry-demo.git
+cd opentelemetry-demo
+docker compose up -d
+
+# 数分待ってトレースデータが蓄積されたら、サービス定義を生成
+cd /path/to/simple-service-catalog-kit
+pnpm generate:jaeger -- --jaeger-url http://localhost:57006/jaeger/ui
+
+# 生成されたサービス定義を確認
+pnpm dev
+```
+
 ## ライセンス
 
 MIT
