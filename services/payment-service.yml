@@ -1,0 +1,5 @@
+description: 決済処理を担当するサービス
+owner: finance-team
+github: https://github.com/example/payment-service
+dependencies:
+  - user-service

@@ -1,0 +1,5 @@
+description: 通知（メール・プッシュ）を担当するサービス
+owner: platform-team
+github: https://github.com/example/notification-service
+dependencies:
+  - user-service

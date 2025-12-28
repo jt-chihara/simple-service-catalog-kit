@@ -1,0 +1,6 @@
+description: APIリクエストのルーティングと認証を担当するゲートウェイサービス
+owner: platform-team
+github: https://github.com/example/api-gateway
+dependencies:
+  - user-service
+  - order-service
