@@ -2,13 +2,14 @@ import { Handle, Position } from '@xyflow/react'
 import type { Service } from '../../types/service'
 
 interface ServiceNodeProps {
-  data: Service
+  data: Service & { dimmed?: boolean }
   selected?: boolean
 }
 
 export function ServiceNode({ data, selected }: ServiceNodeProps) {
+  const dimmed = data.dimmed ?? false
   return (
-    <div className={`service-node ${selected ? 'selected' : ''}`}>
+    <div className={`service-node ${selected ? 'selected' : ''} ${dimmed ? 'dimmed' : ''}`}>
       <Handle type="target" position={Position.Top} />
       <div className="service-node-content">
         <div className="service-name">{data.name}</div>

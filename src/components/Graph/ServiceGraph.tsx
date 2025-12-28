@@ -17,6 +17,7 @@ interface ServiceGraphProps {
   services: Service[]
   onNodeClick?: (service: Service) => void
   selectedServiceName?: string | null
+  highlightedServiceNames?: Set<string>
 }
 
 const nodeTypes = {
@@ -27,7 +28,12 @@ const edgeTypes = {
   dependency: DependencyEdge,
 }
 
-export function ServiceGraph({ services, onNodeClick, selectedServiceName }: ServiceGraphProps) {
+export function ServiceGraph({
+  services,
+  onNodeClick,
+  selectedServiceName,
+  highlightedServiceNames,
+}: ServiceGraphProps) {
   const { nodes, edges } = useMemo(() => {
     const rawNodes = servicesToNodes(services)
     const rawEdges = dependenciesToEdges(services)
@@ -36,14 +42,18 @@ export function ServiceGraph({ services, onNodeClick, selectedServiceName }: Ser
 
   // ReactFlow用にノードを変換
   const flowNodes: Node[] = useMemo(() => {
+    const hasHighlight = highlightedServiceNames && highlightedServiceNames.size > 0
     return nodes.map((node) => ({
       id: node.id,
       type: node.type,
       position: node.position,
-      data: node.data as unknown as Record<string, unknown>,
+      data: {
+        ...(node.data as unknown as Record<string, unknown>),
+        dimmed: hasHighlight && !highlightedServiceNames.has(node.id),
+      },
       selected: node.id === selectedServiceName,
     }))
-  }, [nodes, selectedServiceName])
+  }, [nodes, selectedServiceName, highlightedServiceNames])
 
   // ReactFlow用にエッジを変換
   const flowEdges: Edge[] = useMemo(() => {
