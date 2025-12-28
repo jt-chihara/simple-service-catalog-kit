@@ -136,6 +136,44 @@ pnpm generate:jaeger -- --jaeger-url http://localhost:57006/jaeger/ui
 pnpm dev
 ```
 
+## Datadogからの自動生成
+
+Datadog APMのサービス依存関係からYAMLを自動生成できます。
+
+### 基本的な使い方
+
+```bash
+# 環境変数でAPIキーを設定
+export DD_API_KEY="your-api-key"
+export DD_APP_KEY="your-application-key"
+
+# サービス定義を生成
+pnpm generate:datadog -- --env production
+
+# 確認モード
+pnpm generate:datadog -- --env production --dry-run
+```
+
+### オプション
+
+| オプション | 説明 | デフォルト |
+|-----------|------|-----------|
+| `--api-key <key>` | Datadog APIキー | 環境変数 `DD_API_KEY` |
+| `--app-key <key>` | Datadog Application Key | 環境変数 `DD_APP_KEY` |
+| `--site <site>` | Datadogサイト | `datadoghq.com` |
+| `--env <env>` | APM環境（必須） | - |
+| `--output <dir>` | 出力先ディレクトリ | `./services` |
+| `--owner <name>` | デフォルトのオーナー名 | `unknown-team` |
+| `--dry-run` | ファイルを作成せずに確認 | - |
+
+### サポートするDatadogサイト
+
+- `datadoghq.com` (US1)
+- `datadoghq.eu` (EU)
+- `us3.datadoghq.com` (US3)
+- `us5.datadoghq.com` (US5)
+- `ddog-gov.com` (US1-FED)
+
 ## ライセンス
 
 MIT
