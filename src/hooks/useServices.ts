@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { Service, Warning } from '../types/service'
+import { detectCycles } from '../utils/cycle-detector'
 import { loadAllServices } from '../utils/service-loader'
+import { detectMissingReferences } from '../utils/warning-detector'
 
 /**
  * サービス読み込み状態
@@ -44,14 +46,12 @@ export function useServices(): UseServicesResult {
   const [services, setServices] = useState<Service[]>([])
   const [state, setState] = useState<LoadingState>('idle')
   const [errors, setErrors] = useState<Array<{ fileName: string; error: string }>>([])
-  const [warnings, setWarnings] = useState<Warning[]>([])
   const [selectedService, setSelectedService] = useState<Service | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   const reload = useCallback(async () => {
     setState('loading')
     setErrors([])
-    setWarnings([])
 
     try {
       const result = await loadAllServices()
@@ -64,6 +64,14 @@ export function useServices(): UseServicesResult {
       setState('error')
     }
   }, [])
+
+  // 警告を検出
+  const warnings = useMemo(() => {
+    if (services.length === 0) return []
+    const cycleWarnings = detectCycles(services)
+    const missingWarnings = detectMissingReferences(services)
+    return [...cycleWarnings, ...missingWarnings]
+  }, [services])
 
   useEffect(() => {
     reload()

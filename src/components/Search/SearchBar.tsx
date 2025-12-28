@@ -19,9 +19,7 @@ export function SearchBar({ value, onChange, matchedCount, relatedCount }: Searc
         <>
           <span className="search-result-count">
             <span className="search-matched">{matchedCount}件</span>
-            {relatedCount > 0 && (
-              <span className="search-related">（関連: {relatedCount}件）</span>
-            )}
+            {relatedCount > 0 && <span className="search-related">（関連: {relatedCount}件）</span>}
           </span>
           <button
             type="button"

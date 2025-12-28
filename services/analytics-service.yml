@@ -1,0 +1,6 @@
+description: ユーザー行動分析とレポート生成を担当するサービス
+owner: data-team
+github: https://github.com/example/analytics-service
+dependencies:
+  - user-service
+  - order-service

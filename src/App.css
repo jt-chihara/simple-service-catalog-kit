@@ -140,6 +140,47 @@
   color: #fca5a5;
 }
 
+/* Warning Panel */
+.warning-panel {
+  background: #78350f;
+  border-bottom: 1px solid #92400e;
+  padding: 1rem 1.5rem;
+}
+
+.warning-panel h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fef3c7;
+}
+
+.warning-section {
+  margin-bottom: 0.75rem;
+}
+
+.warning-section:last-child {
+  margin-bottom: 0;
+}
+
+.warning-section h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fcd34d;
+  margin: 0 0 0.5rem 0;
+}
+
+.warning-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.warning-item {
+  font-size: 0.875rem;
+  color: #fef3c7;
+  padding: 0.25rem 0;
+}
+
 /* Service Node */
 .service-node {
   background: #1e293b;

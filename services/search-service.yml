@@ -1,0 +1,5 @@
+description: 商品検索とインデックス管理を担当するサービス
+owner: search-team
+github: https://github.com/example/search-service
+dependencies:
+  - inventory-service

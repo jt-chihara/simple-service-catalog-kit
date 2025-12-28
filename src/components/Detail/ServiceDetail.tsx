@@ -20,9 +20,9 @@ export function ServiceDetail({ service, services, onServiceSelect, onClose }: S
   }
 
   return (
-    <aside className="service-detail">
+    <aside className="service-detail" aria-label="サービス詳細">
       <header className="service-detail-header">
-        <h2>{service.name}</h2>
+        <h2 id="service-detail-title">{service.name}</h2>
         <button type="button" onClick={onClose} aria-label="閉じる">
           ✕
         </button>
