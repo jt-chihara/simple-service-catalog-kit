@@ -1,0 +1,5 @@
+description: 在庫管理と商品マスタを担当するサービス
+owner: logistics-team
+github: https://github.com/example/inventory-service
+dependencies:
+  - notification-service

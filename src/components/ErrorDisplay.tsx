@@ -13,9 +13,9 @@ export function ErrorDisplay({ errors }: ErrorDisplayProps) {
   }
 
   return (
-    <div className="error-display">
+    <div className="error-display" role="alert" aria-live="polite">
       <h2>エラー</h2>
-      <ul>
+      <ul aria-label="エラー一覧">
         {errors.map((err) => (
           <li key={`${err.fileName}-${err.error}`}>
             <strong>{err.fileName || '一般エラー'}</strong>

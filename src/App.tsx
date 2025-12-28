@@ -3,6 +3,7 @@ import { ServiceDetail } from './components/Detail/ServiceDetail'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { ServiceGraph } from './components/Graph/ServiceGraph'
 import { SearchBar } from './components/Search/SearchBar'
+import { WarningPanel } from './components/WarningPanel'
 import { useServices } from './hooks/useServices'
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     services,
     state,
     errors,
+    warnings,
     selectService,
     selectedService,
     searchQuery,
@@ -33,10 +35,15 @@ function App() {
       </header>
 
       <ErrorDisplay errors={errors} />
+      <WarningPanel warnings={warnings} />
 
       <div className="app-content">
-        <main className="app-main">
-          {state === 'loading' && <div className="loading">読み込み中...</div>}
+        <main className="app-main" aria-label="サービス依存関係グラフ">
+          {state === 'loading' && (
+            <div className="loading" aria-live="polite">
+              読み込み中...
+            </div>
+          )}
 
           {state === 'success' && services.length === 0 && (
             <div className="empty">

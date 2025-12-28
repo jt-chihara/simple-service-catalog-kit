@@ -9,7 +9,10 @@ interface ServiceNodeProps {
 export function ServiceNode({ data, selected }: ServiceNodeProps) {
   const dimmed = data.dimmed ?? false
   return (
-    <div className={`service-node ${selected ? 'selected' : ''} ${dimmed ? 'dimmed' : ''}`}>
+    <div
+      className={`service-node ${selected ? 'selected' : ''} ${dimmed ? 'dimmed' : ''}`}
+      aria-label={`${data.name} - ${data.description}`}
+    >
       <Handle type="target" position={Position.Top} />
       <div className="service-node-content">
         <div className="service-name">{data.name}</div>
@@ -20,6 +23,7 @@ export function ServiceNode({ data, selected }: ServiceNodeProps) {
           rel="noopener noreferrer"
           className="github-link"
           onClick={(e) => e.stopPropagation()}
+          aria-label={`${data.name}のGitHubリポジトリを開く`}
         >
           GitHub
         </a>
