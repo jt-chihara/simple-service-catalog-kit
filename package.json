@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "tsx scripts/generate-service-index.ts && vite",
+    "build": "tsx scripts/generate-service-index.ts && tsc -b && vite build && cp -r services dist/",
+    "generate:index": "tsx scripts/generate-service-index.ts",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",

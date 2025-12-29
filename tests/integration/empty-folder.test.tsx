@@ -60,7 +60,7 @@ describe('Empty Folder Handling', () => {
 
     await screen.findByText(/サービスが見つかりません/)
 
-    expect(screen.getByText('Service Dependency Catalog')).toBeInTheDocument()
+    expect(screen.getByText('Simple Service Catalog Kit')).toBeInTheDocument()
   })
 
   it('すべてのYAMLにエラーがあり、有効なサービスがない場合はエラー状態になる', async () => {

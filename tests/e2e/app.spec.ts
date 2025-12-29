@@ -5,7 +5,7 @@ test.describe('Service Catalog App', () => {
     await page.goto('/')
 
     // ヘッダーが表示される
-    await expect(page.getByText('Service Dependency Catalog')).toBeVisible()
+    await expect(page.getByText('Simple Service Catalog Kit')).toBeVisible()
 
     // グラフエリアが表示される
     await expect(page.locator('.react-flow')).toBeVisible()

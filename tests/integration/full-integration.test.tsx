@@ -93,7 +93,7 @@ describe('Full Integration Test', () => {
     render(<App />)
 
     // ヘッダーが表示される
-    expect(screen.getByText('Service Dependency Catalog')).toBeInTheDocument()
+    expect(screen.getByText('Simple Service Catalog Kit')).toBeInTheDocument()
 
     // グラフが表示される
     await waitFor(() => {
