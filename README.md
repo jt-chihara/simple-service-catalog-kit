@@ -174,6 +174,58 @@ pnpm generate:datadog -- --env production --dry-run
 - `us5.datadoghq.com` (US5)
 - `ddog-gov.com` (US1-FED)
 
+## S3へのデプロイ
+
+このアプリはS3 + CloudFrontで静的ホスティングが可能です。
+
+### ビルドと準備
+
+```bash
+# ビルド（自動的にindex.jsonが生成されます）
+pnpm build
+
+# 出力される dist/ フォルダの構成
+dist/
+├── index.html
+├── assets/
+│   ├── index-*.css
+│   └── index-*.js
+└── services/
+    ├── index.json        # サービス一覧
+    ├── api-gateway.yml   # 各サービス定義
+    └── ...
+```
+
+### S3バケット設定
+
+1. S3バケットを作成（静的ウェブサイトホスティングを有効化）
+2. `dist/` フォルダの内容をバケットにアップロード
+3. CloudFrontディストリビューションを作成（オプション、推奨）
+
+### デプロイコマンド例
+
+```bash
+# AWS CLIでS3にデプロイ
+aws s3 sync dist/ s3://your-bucket-name --delete
+
+# CloudFrontのキャッシュを無効化
+aws cloudfront create-invalidation \
+  --distribution-id YOUR_DISTRIBUTION_ID \
+  --paths "/*"
+```
+
+### サービス定義の更新
+
+S3上のYAMLファイルを直接更新することで、アプリを再ビルドせずにサービス定義を更新できます。
+
+```bash
+# index.jsonのみ再生成
+pnpm generate:index
+
+# 新しいサービスファイルとindex.jsonをS3にアップロード
+aws s3 sync services/ s3://your-bucket-name/services/
+```
+
 ## ライセンス
 
 MIT

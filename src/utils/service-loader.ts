@@ -13,47 +13,74 @@ export interface LoadResult {
 }
 
 /**
+ * サービスインデックスの型
+ */
+interface ServiceIndex {
+  services: string[]
+}
+
+type FetchResult =
+  | { service: Service }
+  | { fileName: string; error: string }
+
+/**
  * services/ フォルダからすべてのYAMLファイルを読み込む
- * Vite glob importを使用
+ * S3デプロイ対応のためfetchを使用
  */
 export async function loadAllServices(): Promise<LoadResult> {
   const services: Service[] = []
   const errors: Array<{ fileName: string; error: string }> = []
 
-  // Vite glob importでYAMLファイルを読み込む
-  const yamlModules = import.meta.glob('/services/*.yml', {
-    query: '?raw',
-    import: 'default',
-  })
-
-  for (const [path, loader] of Object.entries(yamlModules)) {
-    // ファイル名からサービス名を抽出（例: /services/user-service.yml → user-service）
-    const fileName = path.split('/').pop() ?? ''
-    const serviceName = fileName.replace(/\.ya?ml$/, '')
-
-    try {
-      const content = (await loader()) as string
-      const parseResult = parseServiceYaml(content, serviceName)
-
-      if (!parseResult.success) {
-        errors.push({ fileName, error: parseResult.error })
-        continue
-      }
-
-      const validationResult = validateService(parseResult.data)
-      if (!validationResult.valid) {
-        errors.push({
-          fileName,
-          error: validationResult.errors.join(', '),
-        })
-        continue
-      }
-
-      services.push(parseResult.data)
-    } catch (error) {
-      const message = error instanceof Error ? error.message : '不明なエラー'
-      errors.push({ fileName, error: message })
+  try {
+    // index.jsonからサービス一覧を取得
+    const indexResponse = await fetch('/services/index.json')
+    if (!indexResponse.ok) {
+      throw new Error(`Failed to fetch service index: ${indexResponse.status}`)
     }
+
+    const index: ServiceIndex = await indexResponse.json()
+
+    // 各サービスファイルを並列で取得
+    const fetchPromises = index.services.map(async (fileName): Promise<FetchResult> => {
+      const serviceName = fileName.replace(/\.ya?ml$/, '')
+
+      try {
+        const response = await fetch(`/services/${fileName}`)
+        if (!response.ok) {
+          return { fileName, error: `HTTP ${response.status}` }
+        }
+
+        const content = await response.text()
+        const parseResult = parseServiceYaml(content, serviceName)
+
+        if (!parseResult.success) {
+          return { fileName, error: parseResult.error }
+        }
+
+        const validationResult = validateService(parseResult.data)
+        if (!validationResult.valid) {
+          return { fileName, error: validationResult.errors.join(', ') }
+        }
+
+        return { service: parseResult.data }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '不明なエラー'
+        return { fileName, error: message }
+      }
+    })
+
+    const results = await Promise.all(fetchPromises)
+
+    for (const result of results) {
+      if ('service' in result) {
+        services.push(result.service)
+      } else {
+        errors.push({ fileName: result.fileName, error: result.error })
+      }
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : '不明なエラー'
+    errors.push({ fileName: 'index.json', error: message })
   }
 
   return { services, errors }

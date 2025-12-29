@@ -1,0 +1,12 @@
+{
+  "services": [
+    "analytics-service.yml",
+    "api-gateway.yml",
+    "inventory-service.yml",
+    "notification-service.yml",
+    "order-service.yml",
+    "payment-service.yml",
+    "search-service.yml",
+    "user-service.yml"
+  ]
+}

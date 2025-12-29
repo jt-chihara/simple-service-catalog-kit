@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Service Dependency Catalog</h1>
+        <h1>Simple Service Catalog Kit</h1>
         {state === 'success' && services.length > 0 && (
           <SearchBar
             value={searchQuery}
